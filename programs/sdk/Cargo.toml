@@ -1,0 +1,20 @@
+[package]
+name = "sdk"
+version = "0.1.0"
+edition = "2021"
+
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+    'cfg(feature, values("custom-heap", "custom-panic", "frozen-abi", "no-entrypoint"))',
+]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+solana-account-info = "3.0"
+solana-program-entrypoint = "3.0"
+solana-program-error = "3.0"
+solana-pubkey = "3.0"
