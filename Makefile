@@ -13,6 +13,7 @@ bench:
 # Build the program.
 .PHONY: build
 build:
+	cargo build-sbf --manifest-path programs/pinocchio/Cargo.toml --tools-version v1.51
 	RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/sdk/Cargo.toml --tools-version v1.51
 
 # Run `cargo clean`.

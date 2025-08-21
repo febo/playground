@@ -159,7 +159,7 @@ pub fn run_cpi(program_id: &Pubkey, name: &'static str) {
     // CPI to system program.
 
     let (instruction, accounts) = cpi_instruction(*program_id);
-    bencher = bencher.bench(("system_program::transfer", &instruction, &accounts));
+    bencher = bencher.bench(("system_program::create", &instruction, &accounts));
 
     bencher.execute();
 }

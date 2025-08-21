@@ -1,12 +1,7 @@
-use {
-    solana_account_info::AccountInfo,
-    //solana_cpi::invoke,
-    //solana_msg::msg,
-    solana_program_entrypoint::{entrypoint, ProgramResult},
-    //solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
-    //solana_system_interface::instruction::create_account,
-};
+use pinocchio::{account_info::AccountInfo, entrypoint, pubkey::Pubkey, ProgramResult};
+//use pinocchio::program_error::ProgramError;
+//use pinocchio_log::log;
+//use pinocchio_system::instructions::CreateAccount;
 
 // Declares the entrypoint of the program.
 entrypoint!(process_instruction);
@@ -15,7 +10,7 @@ entrypoint!(process_instruction);
 pub fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],
-    _instruction_data: &[u8],
+    _nstruction_data: &[u8],
 ) -> ProgramResult {
     // (1) run_accounts
     core::hint::black_box(Ok(()))
@@ -27,10 +22,14 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let create_ix = create_account(from.key, to.key, 1_000_000_000, 10, program_id);
-    let create_accounts = [from.clone(), to.clone()];
-
-    invoke(&create_ix, &create_accounts)
+    CreateAccount {
+        from,
+        to,
+        lamports: 1_000_000_000,
+        space: 10,
+        owner: program_id,
+    }
+    .invoke()
     */
     // end of 2
 
@@ -40,7 +39,7 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    msg!("lamports={:?}", &[account.lamports(), account.lamports()]);
+    log!("lamports={}", &[account.lamports(), account.lamports()]);
 
     Ok(())
     */
