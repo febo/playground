@@ -10,7 +10,7 @@ entrypoint!(process_instruction);
 pub fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],
-    _nstruction_data: &[u8],
+    _instruction_data: &[u8],
 ) -> ProgramResult {
     // (1) run_accounts
     core::hint::black_box(Ok(()))
