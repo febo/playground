@@ -56,20 +56,30 @@ make bench pinocchio run_account
 
 After the execution, mollusk with report the compute units in a `compute_units.md` located at `./target/benches`. For the `run_accounts` bench, the file contents would look like:
 ```
-#### 2025-08-28 10:58:36.299232 UTC
-
-Solana CLI Version: solana-cli 2.1.22 (src:26944979; feat:1416569292, client:Agave)
-
-| Name | CUs | Delta |
-|------|------|-------|
-| Account (1) | 17 | - new - |
-| Account (2) | 17 | - new - |
-| Account (3) | 37 | - new - |
-| Account (4) | 45 | - new - |
-| Account (8) | 78 | - new - |
+| Name         | CUs | Delta   |
+|--------------|-----|---------|
+| Account (1)  | 17  | - new - |
+| Account (2)  | 17  | - new - |
+| Account (3)  | 37  | - new - |
+| Account (4)  | 45  | - new - |
+| Account (8)  | 78  | - new - |
 | Account (16) | 143 | - new - |
 | Account (32) | 261 | - new - |
 | Account (64) | 504 | - new - |
+```
+
+For `run_cpi`:
+```
+| Name                   | CUs  | Delta   |
+|------------------------|------|---------|
+| system_program::create | 1281 | - new - |
+```
+
+For `run_log`:
+```
+| Name | CUs  | Delta   |
+|------|------|---------|
+| log  | 447  | - new - |
 ```
 
 When you make modification or run a different program but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
