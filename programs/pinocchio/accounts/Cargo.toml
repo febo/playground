@@ -13,4 +13,11 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-pinocchio = "0.10.0"
+pinocchio = { version = "0.10", default-features = false }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
