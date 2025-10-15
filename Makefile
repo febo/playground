@@ -16,7 +16,10 @@ ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 #
 # Expected args: <type> [branch name]
 bench:
-	@cargo bench --bench $(ARGS)
+	@# Temporarily move .cargo to avoid using local config during benchmarks
+	@mv .cargo .cargo-temp
+	@cargo +nightly bench --bench $(ARGS)
+	@mv .cargo-temp .cargo
 
 # Build all programs.
 all:
@@ -26,7 +29,7 @@ all:
 
 # Build a program.
 build-%:
-	@RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.51
+	@cargo +nightly build-bpf --manifest-path --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.51
 
 # Run `cargo clean`.
 clean:
