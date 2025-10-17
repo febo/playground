@@ -29,6 +29,9 @@ all:
 
 # Build a program.
 build-%:
+	@# Not great but avoid to have to manually rename .cargo each time benches fail.
+	@-mv .cargo-temp .cargo 2>/dev/null
+
 	@cargo +nightly build-bpf --manifest-path --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.51
 
 # Run `cargo clean`.
