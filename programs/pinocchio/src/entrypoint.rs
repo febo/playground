@@ -1,15 +1,15 @@
-use pinocchio::{account_info::AccountInfo, entrypoint, pubkey::Pubkey, ProgramResult};
-//use pinocchio::program_error::ProgramError;
-//use pinocchio_log::log;
+//use pinocchio::error::ProgramError;
+use pinocchio::{entrypoint, AccountView, Address, ProgramResult};
 //use pinocchio_system::instructions::CreateAccount;
+//use solana_program_log::log;
 
 // Declares the entrypoint of the program.
 entrypoint!(process_instruction);
 
 /// Instruction processor
 pub fn process_instruction(
-    _program_id: &Pubkey,
-    _accounts: &[AccountInfo],
+    _program_id: &Address,
+    _accounts: &[AccountView],
     _instruction_data: &[u8],
 ) -> ProgramResult {
     // (1) run_accounts
