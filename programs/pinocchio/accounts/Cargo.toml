@@ -14,6 +14,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pinocchio = { version = "0.10", default-features = false }
+# Enable static syscalls for BPF target
+solana-define-syscall = { version = "4.0.1", features = ["unstable-static-syscalls"] }
 
 [profile.release]
 opt-level = 3
