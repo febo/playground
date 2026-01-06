@@ -1687,14 +1687,14 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 name = "pinocchio"
 version = "0.1.0"
 dependencies = [
- "pinocchio 0.10.0-rc.1",
+ "pinocchio 0.10.0",
 ]
 
 [[package]]
 name = "pinocchio"
-version = "0.10.0-rc.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57b0544c995d8267e78362c6c37ca70c72c489895f2c07aa91e404b1667cc8e6"
+checksum = "068560965a8a71332740d7879b16c22aa6c630881830a211c2e4bd54bf8f9b1e"
 dependencies = [
  "solana-account-view",
  "solana-address 2.0.0",

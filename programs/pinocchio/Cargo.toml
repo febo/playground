@@ -13,4 +13,4 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-pinocchio = "0.10.0-rc.1"
+pinocchio = "0.10.0"
