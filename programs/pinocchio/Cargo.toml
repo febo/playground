@@ -14,3 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pinocchio = "0.10.0"
+pinocchio-system = "0.5"
+solana-program-log = "1.0"

@@ -720,10 +720,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "five8"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "23f76610e969fa1784327ded240f1e28a3fd9520c9cec93b636fcf62dd37f772"
+dependencies = [
+ "five8_core",
+]
+
+[[package]]
 name = "five8_const"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "26dec3da8bc3ef08f2c04f61eab298c3ab334523e55f076354d6d6f613799a7b"
+dependencies = [
+ "five8_core",
+]
+
+[[package]]
+name = "five8_const"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1a0f1728185f277989ca573a402716ae0beaaea3f76a8ff87ef9dd8fb19436c5"
 dependencies = [
  "five8_core",
 ]
@@ -1688,6 +1706,8 @@ name = "pinocchio"
 version = "0.1.0"
 dependencies = [
  "pinocchio 0.10.0",
+ "pinocchio-system",
+ "solana-program-log",
 ]
 
 [[package]]
@@ -1701,6 +1721,16 @@ dependencies = [
  "solana-define-syscall 4.0.1",
  "solana-instruction-view",
  "solana-program-error 3.0.0",
+]
+
+[[package]]
+name = "pinocchio-system"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "24044a0815753862b558e179e78f03f7344cb755de48617a09d7d23b50883b6c"
+dependencies = [
+ "pinocchio 0.10.0",
+ "solana-address 2.0.0",
 ]
 
 [[package]]
@@ -2325,8 +2355,8 @@ version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0a7a457086457ea9db9a5199d719dc8734dc2d0342fad0d8f77633c31eb62f19"
 dependencies = [
- "five8",
- "five8_const",
+ "five8 0.2.1",
+ "five8_const 0.1.4",
  "serde",
  "serde_derive",
  "solana-atomic-u64 3.0.0",
@@ -2342,6 +2372,8 @@ version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e37320fd2945c5d654b2c6210624a52d66c3f1f73b653ed211ab91a703b35bdd"
 dependencies = [
+ "five8 1.0.0",
+ "five8_const 1.0.0",
  "solana-define-syscall 4.0.1",
  "solana-program-error 3.0.0",
 ]
@@ -2646,7 +2678,7 @@ checksum = "b5b96e9f0300fa287b545613f007dfe20043d7812bee255f418c1eb649c93b63"
 dependencies = [
  "bytemuck",
  "bytemuck_derive",
- "five8",
+ "five8 0.2.1",
  "js-sys",
  "serde",
  "serde_derive",
@@ -2661,7 +2693,7 @@ version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a063723b9e84c14d8c0d2cdf0268207dc7adecf546e31251f9e07c7b00b566c"
 dependencies = [
- "five8",
+ "five8 0.2.1",
  "solana-atomic-u64 3.0.0",
  "solana-sanitize 3.0.0",
 ]
@@ -2989,6 +3021,27 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a1af32c995a7b692a915bb7414d5f8e838450cf7c70414e763d8abcae7b51f28"
 
 [[package]]
+name = "solana-program-log"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b26115ff9ec592bb4407379c82e7f00b9d0ae4e3fac80c3fd28c932aec852dc6"
+dependencies = [
+ "solana-define-syscall 4.0.1",
+ "solana-program-log-macro",
+]
+
+[[package]]
+name = "solana-program-log-macro"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "de2b224806ef141865d2f4b4614179089e3b80ba7311fc3bb28742c1d8323946"
+dependencies = [
+ "quote",
+ "regex",
+ "syn 2.0.106",
+]
+
+[[package]]
 name = "solana-program-memory"
 version = "2.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3056,8 +3109,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b62adb9c3261a052ca1f999398c388f1daf558a1b492f60a6d9e64857db4ff1"
 dependencies = [
  "curve25519-dalek 4.1.3",
- "five8",
- "five8_const",
+ "five8 0.2.1",
+ "five8_const 0.1.4",
  "getrandom 0.2.16",
  "js-sys",
  "num-traits",
@@ -3221,7 +3274,7 @@ version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "64c8ec8e657aecfc187522fc67495142c12f35e55ddeca8698edbb738b8dbd8c"
 dependencies = [
- "five8",
+ "five8 0.2.1",
  "solana-sanitize 2.2.1",
 ]
 
