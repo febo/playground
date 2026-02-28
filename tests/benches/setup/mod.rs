@@ -1,8 +1,10 @@
-use mollusk_svm::{program::keyed_account_for_system_program, Mollusk};
-use mollusk_svm_bencher::MolluskComputeUnitBencher;
-use solana_account::Account;
-use solana_instruction::{AccountMeta, Instruction};
-use solana_pubkey::Pubkey;
+use {
+    mollusk_svm::{program::keyed_account_for_system_program, Mollusk},
+    mollusk_svm_bencher::MolluskComputeUnitBencher,
+    solana_account::Account,
+    solana_instruction::{AccountMeta, Instruction},
+    solana_pubkey::Pubkey,
+};
 
 /// System program ID, used for creating accounts.
 const SYSTEM_PROGRAM: Pubkey = Pubkey::new_from_array([0; 32]);
@@ -99,51 +101,32 @@ pub fn log_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
     )
 }
 
+macro_rules! generate_entrypoint_bench {
+    ( $bencher:ident, $program_id:ident, $expected:expr ) => {
+        let (instruction, accounts) = entrypoint_instruction(*$program_id, $expected);
+        let name = format!("Account ({})", $expected);
+
+        $bencher = $bencher.bench((
+            &name,
+            &instruction,
+            &accounts,
+        ));
+    };
+
+    ( $bencher:ident, $program_id:ident, $( $expected:expr ),+ $(,)? ) => {
+        $(
+            generate_entrypoint_bench!($bencher, $program_id, $expected);
+        )+
+    };
+}
+
 pub fn run_accounts(program_id: &Pubkey, name: &'static str) {
     let mollusk = setup(program_id, name);
     let mut bencher = MolluskComputeUnitBencher::new(mollusk)
         .must_pass(true)
         .out_dir("../target/benches");
 
-    // Account 1
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 1);
-    bencher = bencher.bench(("Account (1)", &instruction, &accounts));
-
-    // Account 2
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 2);
-    bencher = bencher.bench(("Account (2)", &instruction, &accounts));
-
-    // Account 3
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 3);
-    bencher = bencher.bench(("Account (3)", &instruction, &accounts));
-
-    // Account 4
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 4);
-    bencher = bencher.bench(("Account (4)", &instruction, &accounts));
-
-    // Account 8
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 8);
-    bencher = bencher.bench(("Account (8)", &instruction, &accounts));
-
-    // Account 16
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 16);
-    bencher = bencher.bench(("Account (16)", &instruction, &accounts));
-
-    // Account 32
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 32);
-    bencher = bencher.bench(("Account (32)", &instruction, &accounts));
-
-    // Account 64
-
-    let (instruction, accounts) = entrypoint_instruction(*program_id, 64);
-    bencher = bencher.bench(("Account (64)", &instruction, &accounts));
+    generate_entrypoint_bench!(bencher, program_id, 0, 1, 2, 3, 4, 8, 16, 32, 64);
 
     // Run the benchmarks.
 

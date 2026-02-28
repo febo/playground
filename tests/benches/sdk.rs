@@ -16,21 +16,20 @@ const PROGRAM_ID: Pubkey = Pubkey::new_from_array([2; 32]);
 #[cfg(test)]
 mod sdk {
 
-    use super::*;
-    use test::Bencher;
+    use {super::*, test::Bencher};
 
     #[bench]
-    fn run_accounts(_bencher: &mut Bencher) {
-        setup::run_accounts(&PROGRAM_ID, "sdk");
+    fn entrypoint(_bencher: &mut Bencher) {
+        setup::run_accounts(&PROGRAM_ID, "sdk_accounts");
     }
 
     #[bench]
-    fn run_cpi(_bencher: &mut Bencher) {
-        setup::run_cpi(&PROGRAM_ID, "sdk");
+    fn cpi(_bencher: &mut Bencher) {
+        setup::run_cpi(&PROGRAM_ID, "sdk_cpi");
     }
 
     #[bench]
-    fn run_log(_bencher: &mut Bencher) {
-        setup::run_log(&PROGRAM_ID, "sdk");
+    fn log(_bencher: &mut Bencher) {
+        setup::run_log(&PROGRAM_ID, "sdk_log");
     }
 }

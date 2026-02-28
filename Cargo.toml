@@ -2,6 +2,10 @@
 resolver = "2"
 members = [
     "tests",
-    "programs/pinocchio",
-    "programs/sdk",
+    "programs/pinocchio/accounts",
+    "programs/pinocchio/cpi",
+    "programs/pinocchio/log",
+    "programs/sdk/accounts",
+    "programs/sdk/cpi",
+    "programs/sdk/log",
 ]

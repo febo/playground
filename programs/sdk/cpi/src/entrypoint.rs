@@ -1,11 +1,10 @@
 use {
     solana_account_info::AccountInfo,
-    //solana_cpi::invoke,
-    //solana_msg::msg,
+    solana_cpi::invoke,
     solana_program_entrypoint::{entrypoint, ProgramResult},
-    //solana_program_error::ProgramError,
+    solana_program_error::ProgramError,
     solana_pubkey::Pubkey,
-    //solana_system_interface::instruction::create_account,
+    solana_system_interface::instruction::create_account,
 };
 
 // Declares the entrypoint of the program.
@@ -13,16 +12,10 @@ entrypoint!(process_instruction);
 
 /// Instruction processor
 pub fn process_instruction(
-    _program_id: &Pubkey,
-    _accounts: &[AccountInfo],
+    program_id: &Pubkey,
+    accounts: &[AccountInfo],
     _instruction_data: &[u8],
 ) -> ProgramResult {
-    // (1) run_accounts
-    core::hint::black_box(Ok(()))
-    // end of 1
-
-    // (2) run_cpi
-    /*
     let [from, to, _system_program] = accounts else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
@@ -31,18 +24,4 @@ pub fn process_instruction(
     let create_accounts = [from.clone(), to.clone()];
 
     invoke(&create_ix, &create_accounts)
-    */
-    // end of 2
-
-    // (3) run_log
-    /*
-    let [account] = accounts else {
-        return Err(ProgramError::NotEnoughAccountKeys);
-    };
-
-    msg!("lamports={:?}", &[account.lamports(), account.lamports()]);
-
-    Ok(())
-    */
-    // end of 3
 }

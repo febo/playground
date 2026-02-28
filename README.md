@@ -11,7 +11,7 @@
 
 ## Getting started
 
-There are two program in the workspace: one using [Solana SDK](https://github.com/anza-xyz/solana-sdk) ("sdk") and another using [pinocchio](https://github.com/anza-xyz/pinocchio) ("pinocchio"). They provide the scaffolding to test and benchmark processor implementations.
+There are two set of programs in the workspace: one using [Solana SDK](https://github.com/anza-xyz/solana-sdk) ("sdk") and another using [pinocchio](https://github.com/anza-xyz/pinocchio) ("pinocchio"). They provide the scaffolding to test and benchmark processor implementations.
 
 ```rust
 pub fn process_instruction(
@@ -24,40 +24,35 @@ pub fn process_instruction(
 ```
 
 The workspace uses [mollusk](https://github.com/anza-xyz/mollusk) to run tests and measure compute units. There are 3 benches setup:
-* `run_accounts`: executes the program with a variable number of accounts.
-* `run_cpi`: executes the program assuming that it will CPI into the syste, program to create an account.
-* `run_log`: executes the program assuming it will log the lamports of an account.
-
-Since it does not use instruction discriminators, it is necessary to change the processor implementation to run different benches.
+* `entrypoint`: executes the program with a variable number of accounts.
+* `cpi`: executes the program assuming that it will CPI into the syste, program to create an account.
+* `log`: executes the program assuming it will log the lamports of an account.
 
 ### Building and Running
 
 A [`Makefile`](https://github.com/febo/playground/blob/main/Makefile) is provided with basic commands to:
-* `bench`: run a specific bench test against a program.
-* `build`: build both programs.
+* `all`: build all programs.
+* `bench <type> [bench name]`: run a specific bench test.
+* `build-<type>-<program-name>`: build a program.
 * `clean`: remove all build files.
 * `clippy`: run `cargo clippy` on the workspace.
 * `format`: run `cargo fmt` on the workspace.
 
 To execute a program, it is first necessary to build them:
 ```bash
-make build
+make build-pinocchio-accounts
 ```
 
 To run a `bench` in a particular program:
 ```bash
-make bench <program> <bench name>
+make bench pinocchio entrypoint
 ```
 
-For example, to run the `run_accounts` bench on the "pinocchio" program:
-```bash
-make bench pinocchio run_account
-```
-
-After the execution, mollusk with report the compute units in a `compute_units.md` located at `./target/benches`. For the `run_accounts` bench, the file contents would look like:
+After the execution, mollusk with report the compute units in a `compute_units.md` located at `./target/benches`. For the `entrypoint` bench, the file contents would look like:
 ```
 | Name         | CUs | Delta   |
 |--------------|-----|---------|
+| Account (0)  | 13  | - new - |
 | Account (1)  | 17  | - new - |
 | Account (2)  | 17  | - new - |
 | Account (3)  | 37  | - new - |
@@ -68,21 +63,21 @@ After the execution, mollusk with report the compute units in a `compute_units.m
 | Account (64) | 504 | - new - |
 ```
 
-For `run_cpi`:
+For `cpi`:
 ```
 | Name                   | CUs  | Delta   |
 |------------------------|------|---------|
 | system_program::create | 1281 | - new - |
 ```
 
-For `run_log`:
+For `log`:
 ```
 | Name | CUs  | Delta   |
 |------|------|---------|
 | log  | 447  | - new - |
 ```
 
-When you make modification or run a different program but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
+When you make a modification or run a different type of program ("pinocchio" or "sdk") but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
 
 ## Adding a bench test
 

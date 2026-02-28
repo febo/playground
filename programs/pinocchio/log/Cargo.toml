@@ -1,0 +1,17 @@
+[package]
+name = "pinocchio-log"
+version = "0.1.0"
+edition = "2021"
+
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+pinocchio = "0.10.0"
+solana-program-log = "1.0"

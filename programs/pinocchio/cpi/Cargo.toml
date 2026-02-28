@@ -1,5 +1,5 @@
 [package]
-name = "pinocchio"
+name = "pinocchio-cpi"
 version = "0.1.0"
 edition = "2021"
 
@@ -15,4 +15,3 @@ crate-type = ["cdylib"]
 [dependencies]
 pinocchio = "0.10.0"
 pinocchio-system = "0.5"
-solana-program-log = "1.0"

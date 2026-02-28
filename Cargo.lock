@@ -1703,15 +1703,6 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
 name = "pinocchio"
-version = "0.1.0"
-dependencies = [
- "pinocchio 0.10.0",
- "pinocchio-system",
- "solana-program-log",
-]
-
-[[package]]
-name = "pinocchio"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "068560965a8a71332740d7879b16c22aa6c630881830a211c2e4bd54bf8f9b1e"
@@ -1724,12 +1715,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "pinocchio-accounts"
+version = "0.1.0"
+dependencies = [
+ "pinocchio",
+]
+
+[[package]]
+name = "pinocchio-cpi"
+version = "0.1.0"
+dependencies = [
+ "pinocchio",
+ "pinocchio-system",
+]
+
+[[package]]
+name = "pinocchio-log"
+version = "0.1.0"
+dependencies = [
+ "pinocchio",
+ "solana-program-log",
+]
+
+[[package]]
 name = "pinocchio-system"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "24044a0815753862b558e179e78f03f7344cb755de48617a09d7d23b50883b6c"
 dependencies = [
- "pinocchio 0.10.0",
+ "pinocchio",
  "solana-address 2.0.0",
 ]
 
@@ -2130,16 +2144,35 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
-name = "sdk"
+name = "sdk-accounts"
+version = "0.1.0"
+dependencies = [
+ "solana-account-info 3.0.0",
+ "solana-program-entrypoint 3.1.0",
+ "solana-pubkey 3.0.0",
+]
+
+[[package]]
+name = "sdk-cpi"
 version = "0.1.0"
 dependencies = [
  "solana-account-info 3.0.0",
  "solana-cpi 3.0.0",
- "solana-msg 3.0.0",
  "solana-program-entrypoint 3.1.0",
  "solana-program-error 3.0.0",
  "solana-pubkey 3.0.0",
  "solana-system-interface 2.0.0",
+]
+
+[[package]]
+name = "sdk-log"
+version = "0.1.0"
+dependencies = [
+ "solana-account-info 3.0.0",
+ "solana-msg 3.0.0",
+ "solana-program-entrypoint 3.1.0",
+ "solana-program-error 3.0.0",
+ "solana-pubkey 3.0.0",
 ]
 
 [[package]]

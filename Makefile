@@ -1,37 +1,50 @@
+# Replace all "-" with "/" in the given string.
+make-path = $(subst -,/,$1)
+# Convert 'programs/anything' to 'programs-anything'.
+program-target = $(subst /,-,$(patsubst programs/%,programs-%,$1))
+# All files directly inside programs.
+PROGRAMS := $(wildcard programs/*/*)
+# Generate the dashed target program names.
+PROGRAM_TARGETS := $(foreach src,$(PROGRAMS),$(call program-target,$(src)))
+# Get the command-line arguments after the target.
+ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+
+# Available targets.
+.PHONY: bench all build clean clippy format
+
 # Run `cargo bench`.
-#	1) name of the program
-#   2) bench name
-.PHONY: bench
-
-# Remove the first word (the target) to get positional arguments
-ARG1 := $(word 2, $(MAKECMDGOALS))
-ARG2 := $(word 3, $(MAKECMDGOALS))
-
+#
+# Expected args: <type> [branch name]
 bench:
-	cargo bench --bench $(ARG1) -- $(ARG2)
+	@cargo bench --bench $(ARGS)
 
-# Build the program.
-.PHONY: build
-build:
-	cargo build-sbf --manifest-path programs/pinocchio/Cargo.toml --tools-version v1.51
-	RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/sdk/Cargo.toml --tools-version v1.51
+# Build all programs.
+all:
+	@for dir in $(PROGRAM_TARGETS); do \
+		$(MAKE) build-$$dir; \
+	done
+
+# Build a program.
+build-%:
+	@RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.51
 
 # Run `cargo clean`.
-.PHONY: clean
 clean:
-	cargo clean
+	@cargo clean
 
 # Run `cargo clippy`.
-.PHONY: clippy
 clippy:
-	cargo clippy
+	@cargo clippy \
+		--workspace --all-targets -- \
+		--deny=warnings \
+		--deny=clippy::default_trait_access \
+		--deny=clippy::arithmetic_side_effects \
+		--deny=clippy::manual_let_else \
+		--deny=clippy::used_underscore_binding
 
 # Run `cargo fmt`.
-.PHONY: format
 format:
-	cargo fmt
+	@cargo fmt --all -- --check
 
-# Catch-all rule to prevent errors when target is not
-# match (this happens with command-line arguments)
 %:
-	@:
+	$(error Unknown target '$@')
