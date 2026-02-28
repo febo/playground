@@ -1,7 +1,7 @@
 # Replace all "-" with "/" in the given string.
 make-path = $(subst -,/,$1)
-# Convert 'programs/anything' to 'programs-anything'.
-program-target = $(subst /,-,$(patsubst programs/%,programs-%,$1))
+# Convert 'programs/anything' to 'anything'.
+program-target = $(subst /,-,$(patsubst programs/%,%,$1))
 # All files directly inside programs.
 PROGRAMS := $(wildcard programs/*/*)
 # Generate the dashed target program names.
@@ -16,23 +16,33 @@ ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 #
 # Expected args: <type> [branch name]
 bench:
-	@# Temporarily move .cargo to avoid using local config during benchmarks
-	@mv .cargo .cargo-temp
-	@cargo +nightly bench --bench $(ARGS)
-	@mv .cargo-temp .cargo
+	@# Temporarily move .cargo to avoid using local config during benchmarks.
+	@# Always restore it, even if bench fails.
+	@if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi
+	@if [ -d .cargo ]; then \
+		mv .cargo .cargo-temp; \
+		trap 'if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi' EXIT; \
+		cargo +nightly bench --bench $(ARGS); \
+	else \
+		cargo +nightly bench --bench $(ARGS); \
+	fi
 
 # Build all programs.
-all:
-	@for dir in $(PROGRAM_TARGETS); do \
-		$(MAKE) build-$$dir; \
-	done
+all: build
+
+# Build all programs.
+build: $(addprefix build-,$(PROGRAM_TARGETS))
 
 # Build a program.
 build-%:
-	@# Not great but avoid to have to manually rename .cargo each time benches fail.
-	@-mv .cargo-temp .cargo 2>/dev/null
-
-	cargo +nightly build-bpf --manifest-path $(call make-path,$*)/Cargo.toml
+	@# Self-heal if a previous bench left `.cargo` renamed.
+	@if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi
+	@program_path=programs/$(call make-path,$*); \
+	config_path=.cargo/config.toml; \
+	if [ -f $$program_path/.cargo/config.toml ]; then \
+		config_path=$$program_path/.cargo/config.toml; \
+	fi; \
+	cargo +nightly --config $$config_path build-bpf --manifest-path $$program_path/Cargo.toml
 
 # Run `cargo clean`.
 clean:

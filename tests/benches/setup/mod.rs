@@ -103,6 +103,23 @@ pub fn log_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
     )
 }
 
+pub fn input_vec_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
+    let data = vec![
+        0x00, 
+        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, // bytes 1..=8 -> unaligned u64
+        0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff,
+    ];
+
+    (
+        Instruction {
+            program_id,
+            accounts: vec![],
+            data,
+        },
+        vec![],
+    )
+}
+
 macro_rules! generate_entrypoint_bench {
     ( $bencher:ident, $program_id:ident, $expected:expr ) => {
         let (instruction, accounts) = entrypoint_instruction(*$program_id, $expected);
@@ -160,5 +177,15 @@ pub fn run_log(program_id: &Pubkey, name: &'static str) {
     let (instruction, accounts) = log_instruction(*program_id);
     bencher = bencher.bench(("log", &instruction, &accounts));
 
+    bencher.execute();
+}
+
+pub fn run_input_vec(program_id: &Pubkey, name: &'static str) {
+    let mollusk = setup(program_id, name);
+    let mut bencher = MolluskComputeUnitBencher::new(mollusk)
+        .must_pass(true)
+        .out_dir("../target/benches");
+    let (instruction, accounts) = input_vec_instruction(*program_id);
+    bencher = bencher.bench(("input_vec", &instruction, &accounts));
     bencher.execute();
 }
