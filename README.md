@@ -52,29 +52,29 @@ After the execution, mollusk with report the compute units in a `compute_units.m
 ```
 | Name         | CUs | Delta   |
 |--------------|-----|---------|
-| Account (0)  | 13  | - new - |
-| Account (1)  | 17  | - new - |
-| Account (2)  | 17  | - new - |
-| Account (3)  | 37  | - new - |
-| Account (4)  | 45  | - new - |
-| Account (8)  | 78  | - new - |
-| Account (16) | 143 | - new - |
-| Account (32) | 261 | - new - |
-| Account (64) | 504 | - new - |
+| Account (0)  | 15  | - new - |
+| Account (1)  | 20  | - new - |
+| Account (2)  | 20  | - new - |
+| Account (3)  | 41  | - new - |
+| Account (4)  | 48  | - new - |
+| Account (8)  | 84  | - new - |
+| Account (16) | 151 | - new - |
+| Account (32) | 272 | - new - |
+| Account (64) | 520 | - new - |
 ```
 
 For `cpi`:
 ```
 | Name                   | CUs  | Delta   |
 |------------------------|------|---------|
-| system_program::create | 1281 | - new - |
+| system_program::create | 1351 | - new - |
 ```
 
 For `log`:
 ```
 | Name | CUs  | Delta   |
 |------|------|---------|
-| log  | 447  | - new - |
+| log  | 487  | - new - |
 ```
 
 When you make a modification or run a different type of program ("pinocchio" or "sdk") but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
