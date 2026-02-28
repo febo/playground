@@ -1,3 +1,5 @@
+#![no_std]
+
 //! Simple pinocchio program.
 
 use pinocchio::Address;

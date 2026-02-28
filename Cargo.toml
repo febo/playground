@@ -5,7 +5,4 @@ members = [
     "programs/pinocchio/accounts",
     "programs/pinocchio/cpi",
     "programs/pinocchio/log",
-    "programs/sdk/accounts",
-    "programs/sdk/cpi",
-    "programs/sdk/log",
 ]

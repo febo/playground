@@ -1,10 +1,15 @@
 use {
-    pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult},
+    pinocchio::{
+        error::ProgramError, no_allocator, nostd_panic_handler, program_entrypoint, AccountView,
+        Address, ProgramResult,
+    },
     solana_program_log::log,
 };
 
 // Declares the entrypoint of the program.
-entrypoint!(process_instruction);
+program_entrypoint!(process_instruction);
+nostd_panic_handler!();
+no_allocator!();
 
 /// Instruction processor
 pub fn process_instruction(
