@@ -1688,8 +1688,6 @@ name = "pinocchio-accounts"
 version = "0.1.0"
 dependencies = [
  "pinocchio",
- "solana-define-syscall 4.0.1",
- "solana-program-log",
 ]
 
 [[package]]
@@ -1698,6 +1696,7 @@ version = "0.1.0"
 dependencies = [
  "pinocchio",
  "pinocchio-system",
+ "solana-define-syscall 4.0.1",
 ]
 
 [[package]]
@@ -1705,6 +1704,7 @@ name = "pinocchio-log"
 version = "0.1.0"
 dependencies = [
  "pinocchio",
+ "solana-define-syscall 4.0.1",
  "solana-program-log",
 ]
 

@@ -20,16 +20,16 @@ mod pinocchio {
 
     #[bench]
     fn entrypoint(_bencher: &mut Bencher) {
-        setup::run_accounts(&PROGRAM_ID, "pinocchio_accounts");
+        setup::run_accounts(&PROGRAM_ID, "libpinocchio_accounts");
     }
 
     #[bench]
     fn cpi(_bencher: &mut Bencher) {
-        setup::run_cpi(&PROGRAM_ID, "pinocchio_cpi");
+        setup::run_cpi(&PROGRAM_ID, "libpinocchio_cpi");
     }
 
     #[bench]
     fn log(_bencher: &mut Bencher) {
-        setup::run_log(&PROGRAM_ID, "pinocchio_log");
+        setup::run_log(&PROGRAM_ID, "libpinocchio_log");
     }
 }
