@@ -31,5 +31,10 @@ mod pinocchio {
     #[bench]
     fn log(_bencher: &mut Bencher) {
         setup::run_log(&PROGRAM_ID, "libpinocchio_log");
+    }  
+    
+    #[bench]
+    fn input_vec(_bencher: &mut Bencher) {
+        setup::run_input_vec(&PROGRAM_ID, "libpinocchio_unalignment");
     }
 }

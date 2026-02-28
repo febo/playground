@@ -4,5 +4,6 @@ members = [
     "tests",
     "programs/pinocchio/accounts",
     "programs/pinocchio/cpi",
-    "programs/pinocchio/log",
+    "programs/pinocchio/log", 
+    "programs/pinocchio/unalignment",
 ]
