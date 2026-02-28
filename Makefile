@@ -1,7 +1,7 @@
 # Replace all "-" with "/" in the given string.
 make-path = $(subst -,/,$1)
-# Convert 'programs/anything' to 'programs-anything'.
-program-target = $(subst /,-,$(patsubst programs/%,programs-%,$1))
+# Convert 'programs/anything' to 'anything'.
+program-target = $(subst /,-,$(patsubst programs/%,%,$1))
 # All files directly inside programs.
 PROGRAMS := $(wildcard programs/*/*)
 # Generate the dashed target program names.
@@ -47,4 +47,4 @@ format:
 	@cargo fmt --all -- --check
 
 %:
-	$(error Unknown target '$@')
+	@# Ignore unknown targets to allow passing arguments after the target.
