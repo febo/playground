@@ -103,7 +103,7 @@ pub fn log_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
     )
 }
 
-pub fn input_vec_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
+pub fn unaligned_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
     let data = vec![
         0x00, 
         0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, // bytes 1..=8 -> unaligned u64
@@ -185,7 +185,7 @@ pub fn run_unaligned_read(program_id: &Pubkey, name: &'static str) {
     let mut bencher = MolluskComputeUnitBencher::new(mollusk)
         .must_pass(true)
         .out_dir("../target/benches");
-    let (instruction, accounts) = input_vec_instruction(*program_id);
+    let (instruction, accounts) = unaligned_instruction(*program_id);
     bencher = bencher.bench(("input_vec", &instruction, &accounts));
     bencher.execute();
 }
