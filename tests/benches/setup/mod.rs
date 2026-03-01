@@ -180,7 +180,7 @@ pub fn run_log(program_id: &Pubkey, name: &'static str) {
     bencher.execute();
 }
 
-pub fn run_input_vec(program_id: &Pubkey, name: &'static str) {
+pub fn run_unaligned_read(program_id: &Pubkey, name: &'static str) {
     let mollusk = setup(program_id, name);
     let mut bencher = MolluskComputeUnitBencher::new(mollusk)
         .must_pass(true)

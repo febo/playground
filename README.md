@@ -48,6 +48,9 @@ To run a `bench` in a particular program:
 make bench pinocchio entrypoint
 ```
 
+#### Disclaimer
+Currently the bench `unaligned_read` is only available with [sbpf-linker](https://github.com/blueshift-gg/sbpf-linker) built with upstream gallery. To run it you need to uncomment the flags in the `.cargo/config.toml` and build the sbpf-linker from source with [`upstream-gallery`](https://github.com/blueshift-gg/sbpf-linker?tab=readme-ov-file#upstream-gallery-early-feature-gate).
+
 After the execution, mollusk with report the compute units in a `compute_units.md` located at `./target/benches`. For the `entrypoint` bench, the file contents would look like:
 ```
 | Name         | CUs | Delta   |

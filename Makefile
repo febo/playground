@@ -16,16 +16,9 @@ ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
 #
 # Expected args: <type> [branch name]
 bench:
-	@# Temporarily move .cargo to avoid using local config during benchmarks.
-	@# Always restore it, even if bench fails.
-	@if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi
-	@if [ -d .cargo ]; then \
-		mv .cargo .cargo-temp; \
-		trap 'if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi' EXIT; \
-		cargo +nightly bench --bench $(ARGS); \
-	else \
-		cargo +nightly bench --bench $(ARGS); \
-	fi
+	@mv .cargo .cargo-temp 2>/dev/null || true
+	@cargo +nightly bench --bench $(ARGS) || true
+	@mv .cargo-temp .cargo
 
 # Build all programs.
 all: build
@@ -35,14 +28,9 @@ build: $(addprefix build-,$(PROGRAM_TARGETS))
 
 # Build a program.
 build-%:
-	@# Self-heal if a previous bench left `.cargo` renamed.
-	@if [ -d .cargo-temp ] && [ ! -d .cargo ]; then mv .cargo-temp .cargo; fi
-	@program_path=programs/$(call make-path,$*); \
-	config_path=.cargo/config.toml; \
-	if [ -f $$program_path/.cargo/config.toml ]; then \
-		config_path=$$program_path/.cargo/config.toml; \
-	fi; \
-	cargo +nightly --config $$config_path build-bpf --manifest-path $$program_path/Cargo.toml
+	@# Not great but avoid to have to manually rename .cargo each time benches fail.
+	@mv .cargo-temp .cargo 2>/dev/null || true
+	@cargo +nightly build-bpf --manifest-path programs/$(call make-path,$*)/Cargo.toml
 
 # Run `cargo clean`.
 clean:

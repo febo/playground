@@ -34,7 +34,7 @@ mod pinocchio {
     }  
     
     #[bench]
-    fn input_vec(_bencher: &mut Bencher) {
-        setup::run_input_vec(&PROGRAM_ID, "libpinocchio_unalignment");
+    fn unaligned_read(_bencher: &mut Bencher) {
+        setup::run_unaligned_read(&PROGRAM_ID, "libpinocchio_unalignment");
     }
 }

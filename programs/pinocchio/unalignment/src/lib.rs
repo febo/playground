@@ -1,5 +1,4 @@
 #![no_std]
-
 use pinocchio::{
     account::AccountView, no_allocator, nostd_panic_handler, program_entrypoint, Address,
     ProgramResult,
@@ -24,5 +23,5 @@ pub fn process_instruction(
 ) -> ProgramResult {
     let v = read_u64_unaligned(instruction_data);
     core::hint::black_box(v);
-    core::hint::black_box(Ok(()))
+    Ok(())
 }

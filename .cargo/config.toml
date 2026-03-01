@@ -7,6 +7,10 @@ rustflags = [
     "-C", "panic=abort",
     "-C", "link-arg=--llvm-args=-bpf-stack-size=4096",
     "-C", "relocation-model=static",
+    # "--cfg", "feature=\"mem_unaligned\"", 
+    # "-C", "link-arg=--disable-memory-builtins",
+    # "-C", "link-arg=--disable-expand-memcpy-in-order",
+    # "-C", "target-cpu=v2"
 ]
 
 [alias]
