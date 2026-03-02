@@ -22,6 +22,6 @@ pub fn process_instruction(
     instruction_data: &[u8],
 ) -> ProgramResult {
     let v = read_u64_unaligned(instruction_data);
-    core::hint::black_box(v);
+    assert_eq!(v, 0x8877665544332211_u64);
     Ok(())
 }
