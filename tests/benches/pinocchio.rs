@@ -31,5 +31,10 @@ mod pinocchio {
     #[bench]
     fn log(_bencher: &mut Bencher) {
         setup::run_log(&PROGRAM_ID, "libpinocchio_log");
+    }  
+    
+    #[bench]
+    fn unaligned_read(_bencher: &mut Bencher) {
+        setup::run_unaligned_read(&PROGRAM_ID, "libpinocchio_unalignment");
     }
 }

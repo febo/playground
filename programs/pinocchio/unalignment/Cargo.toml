@@ -1,0 +1,24 @@
+[package]
+name = "pinocchio-unalignment"
+version = "0.1.0"
+edition = "2021"
+
+[lints.rust.unexpected_cfgs]
+level = "warn"
+check-cfg = [
+    'cfg(target_os, values("solana"))',
+]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+pinocchio = { version = "0.10", default-features = false }
+solana-define-syscall = { version = "4.0.1", features = ["unstable-static-syscalls"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
