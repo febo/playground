@@ -24,9 +24,10 @@ pub fn process_instruction(
 ```
 
 The workspace uses [mollusk](https://github.com/anza-xyz/mollusk) to run tests and measure compute units. There are 3 benches setup:
-* `entrypoint`: executes the program with a variable number of accounts.
 * `cpi`: executes the program assuming that it will CPI into the syste, program to create an account.
+* `entrypoint`: executes the program with a variable number of accounts.
 * `log`: executes the program assuming it will log the lamports of an account.
+* `rent`: calculates the minimum balance for an account using the Rent sysvar.
 
 ### Building and Running
 
@@ -40,7 +41,7 @@ A [`Makefile`](https://github.com/febo/playground/blob/main/Makefile) is provide
 
 To execute a program, it is first necessary to build them:
 ```bash
-make build-pinocchio-accounts
+make build-pinocchio-entrypoint
 ```
 
 To run a `bench` in a particular program:
@@ -75,6 +76,13 @@ For `log`:
 | Name | CUs  | Delta   |
 |------|------|---------|
 | log  | 447  | - new - |
+```
+
+For `rent`:
+```
+| Name | CUs  | Delta   |
+|------|------|---------|
+| rent  | 147  | - new - |
 ```
 
 When you make a modification or run a different type of program ("pinocchio" or "sdk") but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
