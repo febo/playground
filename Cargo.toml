@@ -2,10 +2,27 @@
 resolver = "2"
 members = [
     "tests",
-    "programs/pinocchio/accounts",
     "programs/pinocchio/cpi",
+    "programs/pinocchio/entrypoint",
     "programs/pinocchio/log",
-    "programs/sdk/accounts",
+    "programs/pinocchio/rent",
     "programs/sdk/cpi",
+    "programs/sdk/entrypoint",
     "programs/sdk/log",
+    "programs/sdk/rent",
 ]
+
+[workspace.dependencies]
+pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git" }
+pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git" }
+solana-account-info = "3.0"
+solana-cpi = "3.0"
+solana-msg = "3.0"
+solana-program-entrypoint = "3.0"
+solana-program-error = "3.0"
+solana-program-log = "1.0"
+solana-pubkey = "3.0"
+solana-rent = "4.1.0"
+solana-system-interface = "2.0"
+solana-sysvar = "4.0.0"
+

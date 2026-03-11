@@ -1,5 +1,5 @@
 [package]
-name = "sdk-cpi"
+name = "sdk-rent"
 version = "0.1.0"
 edition = "2021"
 
@@ -15,8 +15,8 @@ crate-type = ["cdylib"]
 
 [dependencies]
 solana-account-info = { workspace = true }
-solana-cpi = { workspace = true }
 solana-program-entrypoint = { workspace = true }
 solana-program-error = { workspace = true }
 solana-pubkey = { workspace = true }
-solana-system-interface = { workspace = true, features = ["bincode"] }
+solana-rent = { workspace = true, features = ["sysvar"] }
+solana-sysvar = { workspace = true }

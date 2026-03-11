@@ -1,5 +1,5 @@
 [package]
-name = "pinocchio-log"
+name = "pinocchio-entrypoint"
 version = "0.1.0"
 edition = "2021"
 
@@ -13,5 +13,4 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-pinocchio =  { workspace = true }
-solana-program-log =  { workspace = true }
+pinocchio = { workspace = true }

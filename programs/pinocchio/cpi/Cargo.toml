@@ -13,5 +13,5 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-pinocchio = "0.10.0"
-pinocchio-system = "0.5"
+pinocchio = { workspace = true }
+pinocchio-system = { workspace = true }

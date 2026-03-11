@@ -1,5 +1,5 @@
 [package]
-name = "sdk-accounts"
+name = "sdk-entrypoint"
 version = "0.1.0"
 edition = "2021"
 
@@ -14,6 +14,6 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = "3.0"
-solana-program-entrypoint = "3.0"
-solana-pubkey = "3.0"
+solana-account-info = { workspace = true }
+solana-program-entrypoint = { workspace = true }
+solana-pubkey = { workspace = true }

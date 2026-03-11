@@ -20,7 +20,7 @@ mod sdk {
 
     #[bench]
     fn entrypoint(_bencher: &mut Bencher) {
-        setup::run_accounts(&PROGRAM_ID, "sdk_accounts");
+        setup::run_entrypoint(&PROGRAM_ID, "sdk_entrypoint");
     }
 
     #[bench]
@@ -31,5 +31,10 @@ mod sdk {
     #[bench]
     fn log(_bencher: &mut Bencher) {
         setup::run_log(&PROGRAM_ID, "sdk_log");
+    }
+
+    #[bench]
+    fn rent(_bencher: &mut Bencher) {
+        setup::run_rent(&PROGRAM_ID, "sdk_rent");
     }
 }

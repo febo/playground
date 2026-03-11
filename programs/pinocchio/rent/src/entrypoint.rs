@@ -1,6 +1,8 @@
-use {
-    pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult},
-    solana_program_log::log,
+use pinocchio::{
+    entrypoint,
+    error::ProgramError,
+    sysvars::{rent::Rent, Sysvar},
+    AccountView, Address, ProgramResult,
 };
 
 // Declares the entrypoint of the program.
@@ -16,7 +18,10 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    log!("lamports={}", &[account.lamports(), account.lamports()]);
+    let rent = Rent::get()?;
+    if account.lamports() < rent.try_minimum_balance(account.data_len())? {
+        return Err(ProgramError::AccountNotRentExempt);
+    }
 
     Ok(())
 }

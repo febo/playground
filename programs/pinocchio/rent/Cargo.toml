@@ -1,5 +1,5 @@
 [package]
-name = "pinocchio-accounts"
+name = "pinocchio-rent"
 version = "0.1.0"
 edition = "2021"
 
@@ -13,4 +13,4 @@ check-cfg = [
 crate-type = ["cdylib"]
 
 [dependencies]
-pinocchio = "0.10.0"
+pinocchio =  { workspace = true }

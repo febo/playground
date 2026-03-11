@@ -120,7 +120,7 @@ macro_rules! generate_entrypoint_bench {
     };
 }
 
-pub fn run_accounts(program_id: &Pubkey, name: &'static str) {
+pub fn run_entrypoint(program_id: &Pubkey, name: &'static str) {
     let mollusk = setup(program_id, name);
     let mut bencher = MolluskComputeUnitBencher::new(mollusk)
         .must_pass(true)
@@ -157,6 +157,30 @@ pub fn run_log(program_id: &Pubkey, name: &'static str) {
 
     let (instruction, accounts) = log_instruction(*program_id);
     bencher = bencher.bench(("log", &instruction, &accounts));
+
+    bencher.execute();
+}
+
+pub fn run_rent(program_id: &Pubkey, name: &'static str) {
+    let mollusk = setup(program_id, name);
+    let mut bencher = MolluskComputeUnitBencher::new(mollusk)
+        .must_pass(true)
+        .out_dir("../target/benches");
+
+    // Log lamports of an account.
+
+    let key = generate_pubkeys(1).pop().unwrap();
+    let accounts = vec![(key, Account::new(BASE_LAMPORTS, 0, &SYSTEM_PROGRAM))];
+
+    let account_metas = vec![AccountMeta::new_readonly(key, false)];
+
+    let instruction = Instruction {
+        program_id: *program_id,
+        accounts: account_metas,
+        data: vec![],
+    };
+
+    bencher = bencher.bench(("rent", &instruction, &accounts));
 
     bencher.execute();
 }

@@ -20,7 +20,7 @@ mod pinocchio {
 
     #[bench]
     fn entrypoint(_bencher: &mut Bencher) {
-        setup::run_accounts(&PROGRAM_ID, "pinocchio_accounts");
+        setup::run_entrypoint(&PROGRAM_ID, "pinocchio_entrypoint");
     }
 
     #[bench]
@@ -31,5 +31,10 @@ mod pinocchio {
     #[bench]
     fn log(_bencher: &mut Bencher) {
         setup::run_log(&PROGRAM_ID, "pinocchio_log");
+    }
+
+    #[bench]
+    fn rent(_bencher: &mut Bencher) {
+        setup::run_rent(&PROGRAM_ID, "pinocchio_rent");
     }
 }

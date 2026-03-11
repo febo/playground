@@ -26,7 +26,7 @@ all:
 
 # Build a program.
 build-%:
-	@RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.51
+	@RUSTFLAGS="-C embed-bitcode=yes -C lto=fat" cargo build-sbf --manifest-path programs/$(call make-path,$*)/Cargo.toml --tools-version v1.54
 
 # Run `cargo clean`.
 clean:

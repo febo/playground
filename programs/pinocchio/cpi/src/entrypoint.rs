@@ -9,7 +9,7 @@ entrypoint!(process_instruction);
 /// Instruction processor
 pub fn process_instruction(
     program_id: &Address,
-    accounts: &[AccountView],
+    accounts: &mut [AccountView],
     _instruction_data: &[u8],
 ) -> ProgramResult {
     let [from, to, _system_program] = accounts else {
