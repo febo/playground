@@ -29,6 +29,16 @@ mod pinocchio {
     }
 
     #[bench]
+    fn cpi1(_bencher: &mut Bencher) {
+        setup::run_cpi(&PROGRAM_ID, "pinocchio_cpi1");
+    }
+
+    #[bench]
+    fn cpi2(_bencher: &mut Bencher) {
+        setup::run_cpi(&PROGRAM_ID, "pinocchio_cpi2");
+    }
+
+    #[bench]
     fn log(_bencher: &mut Bencher) {
         setup::run_log(&PROGRAM_ID, "pinocchio_log");
     }

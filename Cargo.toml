@@ -3,6 +3,8 @@ resolver = "2"
 members = [
     "tests",
     "programs/pinocchio/cpi",
+    "programs/pinocchio/cpi1",
+    "programs/pinocchio/cpi2",
     "programs/pinocchio/entrypoint",
     "programs/pinocchio/log",
     "programs/pinocchio/rent",

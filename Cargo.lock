@@ -1722,6 +1722,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "pinocchio-cpi1"
+version = "0.1.0"
+dependencies = [
+ "pinocchio",
+ "pinocchio-system",
+]
+
+[[package]]
+name = "pinocchio-cpi2"
+version = "0.1.0"
+dependencies = [
+ "pinocchio",
+ "pinocchio-system",
+]
+
+[[package]]
 name = "pinocchio-entrypoint"
 version = "0.1.0"
 dependencies = [
