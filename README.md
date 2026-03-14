@@ -16,7 +16,7 @@ There are two set of programs in the workspace: one using [Solana SDK](https://g
 ```rust
 pub fn process_instruction(
     _program_id: &Address,
-    _accounts: &[AccountView],
+    _accounts: &mut [AccountView],
     _instruction_data: &[u8],
 ) -> ProgramResult {
     core::hint::black_box(Ok(()))
