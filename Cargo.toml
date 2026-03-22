@@ -2,6 +2,8 @@
 resolver = "2"
 members = [
     "tests",
+    "programs/inline/cpi",
+    "programs/inline/entrypoint",
     "programs/pinocchio/cpi",
     "programs/pinocchio/entrypoint",
     "programs/pinocchio/log",
@@ -13,8 +15,8 @@ members = [
 ]
 
 [workspace.dependencies]
-pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git" }
-pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git" }
+pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git", branch = "febo/inline-entrypoint" }
+pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git",  branch = "febo/inline-entrypoint" }
 solana-account-info = "3.0"
 solana-cpi = "3.0"
 solana-msg = "3.0"

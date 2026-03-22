@@ -77,7 +77,7 @@ pub fn cpi_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
         Instruction {
             program_id,
             accounts: account_metas,
-            data: vec![],
+            data: vec![0],
         },
         accounts,
     )
