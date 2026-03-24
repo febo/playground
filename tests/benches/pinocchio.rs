@@ -37,4 +37,9 @@ mod pinocchio {
     fn rent(_bencher: &mut Bencher) {
         setup::run_rent(&PROGRAM_ID, "pinocchio_rent");
     }
+
+    #[bench]
+    fn token(_bencher: &mut Bencher) {
+        setup::run_token(&PROGRAM_ID, "pinocchio_token");
+    }
 }

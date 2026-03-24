@@ -6,6 +6,7 @@ members = [
     "programs/pinocchio/entrypoint",
     "programs/pinocchio/log",
     "programs/pinocchio/rent",
+    "programs/pinocchio/token",
     "programs/sdk/cpi",
     "programs/sdk/entrypoint",
     "programs/sdk/log",
@@ -13,8 +14,9 @@ members = [
 ]
 
 [workspace.dependencies]
-pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git" }
-pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git" }
+pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git", branch = "febo/batch-instruction" }
+pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git", branch = "febo/batch-instruction" }
+pinocchio-token = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git", branch = "febo/batch-instruction" }
 solana-account-info = "3.0"
 solana-cpi = "3.0"
 solana-msg = "3.0"

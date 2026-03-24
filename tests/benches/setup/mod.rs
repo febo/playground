@@ -1,13 +1,23 @@
+#![allow(dead_code)]
+
 use {
-    mollusk_svm::{program::keyed_account_for_system_program, Mollusk},
+    mollusk_svm::{
+        program::{create_program_account_loader_v3, keyed_account_for_system_program},
+        Mollusk,
+    },
     mollusk_svm_bencher::MolluskComputeUnitBencher,
     solana_account::Account,
     solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    solana_program_pack::Pack,
+    solana_pubkey::{pubkey, Pubkey},
+    solana_rent::Rent,
+    spl_token_interface::state::{Account as TokenAccount, Mint},
 };
 
 /// System program ID, used for creating accounts.
 const SYSTEM_PROGRAM: Pubkey = Pubkey::new_from_array([0; 32]);
+
+const TOKEN_PROGRAM: Pubkey = pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
 
 /// Base lamports for accounts, used to ensure accounts are rent-exempt.
 pub const BASE_LAMPORTS: u64 = 2_000_000_000u64;
@@ -101,6 +111,69 @@ pub fn log_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
     )
 }
 
+/// Generates the instruction data and accounts to execute a program that
+/// performs a cross-program invocation (CPI).
+pub fn token_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
+    // keys[0] = mint
+    // keys[1] = account
+    // keys[2] = authority
+    let keys = generate_pubkeys(7);
+    let (token_program_id, token_program_account) = (
+        TOKEN_PROGRAM,
+        create_program_account_loader_v3(&TOKEN_PROGRAM),
+    );
+
+    let rent = Rent::default();
+
+    let accounts = vec![
+        (
+            keys[0],
+            Account::new(rent.minimum_balance(Mint::LEN), Mint::LEN, &TOKEN_PROGRAM),
+        ),
+        (
+            keys[1],
+            Account::new(
+                rent.minimum_balance(TokenAccount::LEN),
+                TokenAccount::LEN,
+                &TOKEN_PROGRAM,
+            ),
+        ),
+        (
+            keys[2],
+            Account::new(
+                rent.minimum_balance(TokenAccount::LEN),
+                TokenAccount::LEN,
+                &TOKEN_PROGRAM,
+            ),
+        ),
+        (keys[3], Account::new(0, 0, &SYSTEM_PROGRAM)),
+        (keys[4], Account::new(0, 0, &SYSTEM_PROGRAM)),
+        (keys[5], Account::new(0, 0, &SYSTEM_PROGRAM)),
+        (keys[6], Account::new(0, 0, &SYSTEM_PROGRAM)),
+        (token_program_id, token_program_account),
+    ];
+
+    let account_metas = vec![
+        AccountMeta::new(keys[0], false),
+        AccountMeta::new(keys[1], false),
+        AccountMeta::new(keys[2], false),
+        AccountMeta::new_readonly(keys[3], true),
+        AccountMeta::new_readonly(keys[4], false),
+        AccountMeta::new(keys[5], true),
+        AccountMeta::new_readonly(keys[6], true),
+        AccountMeta::new_readonly(token_program_id, false),
+    ];
+
+    (
+        Instruction {
+            program_id,
+            accounts: account_metas,
+            data: vec![],
+        },
+        accounts,
+    )
+}
+
 macro_rules! generate_entrypoint_bench {
     ( $bencher:ident, $program_id:ident, $expected:expr ) => {
         let (instruction, accounts) = entrypoint_instruction(*$program_id, $expected);
@@ -181,6 +254,20 @@ pub fn run_rent(program_id: &Pubkey, name: &'static str) {
     };
 
     bencher = bencher.bench(("rent", &instruction, &accounts));
+
+    bencher.execute();
+}
+
+pub fn run_token(program_id: &Pubkey, name: &'static str) {
+    let mut mollusk = setup(program_id, name);
+    mollusk.add_program(&TOKEN_PROGRAM, "pinocchio_token_program");
+
+    let mut bencher = MolluskComputeUnitBencher::new(mollusk)
+        .must_pass(true)
+        .out_dir("../target/benches");
+
+    let (instruction, accounts) = token_instruction(*program_id);
+    bencher = bencher.bench(("token", &instruction, &accounts));
 
     bencher.execute();
 }
