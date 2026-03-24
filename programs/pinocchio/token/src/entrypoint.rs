@@ -1,7 +1,7 @@
 use {
     pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult},
     pinocchio_token::instructions::{
-        Batch, CloseAccount, InitializeAccount3, InitializeMint2, MintTo, Transfer,
+        Batch, CloseAccount, InitializeAccount3, InitializeMint2, IntoBatch, MintTo, Transfer,
     },
 };
 
@@ -22,37 +22,23 @@ pub fn process_instruction(
 
     let mut batch = Batch::default();
 
-    let initialize_mint1 = InitializeMint2 {
-        mint: mint1,
-        mint_authority: mint_authority.address(),
-        decimals: 9,
-        freeze_authority: Some(freeze_authority.address()),
-    };
+    InitializeMint2::new(
+        mint1,
+        9,
+        mint_authority.address(),
+        Some(freeze_authority.address()),
+    )
+    .into_batch(&mut batch)?;
 
-    let initialize_account1 = InitializeAccount3 {
-        account: account1,
-        mint: mint1,
-        owner: owner1.address(),
-    };
+    InitializeAccount3::new(account1, mint1, owner1.address()).into_batch(&mut batch)?;
 
-    let initialize_account2 = InitializeAccount3 {
-        account: account2,
-        mint: mint1,
-        owner: owner2.address(),
-    };
+    InitializeAccount3::new(account2, mint1, owner2.address()).into_batch(&mut batch)?;
 
-    let mint_to = MintTo::new(mint1, account1, mint_authority, 1000);
+    MintTo::new(mint1, account1, mint_authority, 1000).into_batch(&mut batch)?;
 
-    let transfer = Transfer::new(account1, account2, owner1, 1000);
+    Transfer::new(account1, account2, owner1, 1000).into_batch(&mut batch)?;
 
-    let close_account = CloseAccount::new(account1, owner1, owner1);
-
-    batch.push(&initialize_mint1)?;
-    batch.push(&initialize_account1)?;
-    batch.push(&initialize_account2)?;
-    batch.push(&mint_to)?;
-    batch.push(&transfer)?;
-    batch.push(&close_account)?;
+    CloseAccount::new(account1, owner1, owner1).into_batch(&mut batch)?;
 
     batch.invoke()
 }
