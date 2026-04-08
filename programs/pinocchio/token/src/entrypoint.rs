@@ -1,9 +1,27 @@
 use {
     pinocchio::{entrypoint, error::ProgramError, AccountView, Address, ProgramResult},
     pinocchio_token::instructions::{
-        Batch, CloseAccount, InitializeAccount3, InitializeMint2, IntoBatch, MintTo, Transfer,
+        Batch, BatchState, CloseAccount, InitializeAccount3, InitializeMint2, IntoBatch, MintTo,
+        Transfer,
     },
 };
+
+/// The number of accounts for the batch instruction.
+const MAX_ACCOUNTS_LEN: usize = InitializeMint2::ACCOUNTS_LEN
+    + InitializeAccount3::ACCOUNTS_LEN
+    + InitializeAccount3::ACCOUNTS_LEN
+    + MintTo::MAX_ACCOUNTS_LEN
+    + Transfer::MAX_ACCOUNTS_LEN
+    + CloseAccount::MAX_ACCOUNTS_LEN;
+
+/// The length of the instruction data for the batch instruction.
+const MAX_DATA_LEN: usize = Batch::header_data_len(6)
+    + InitializeMint2::MAX_DATA_LEN
+    + InitializeAccount3::DATA_LEN
+    + InitializeAccount3::DATA_LEN
+    + MintTo::DATA_LEN
+    + Transfer::DATA_LEN
+    + CloseAccount::DATA_LEN;
 
 // Declares the entrypoint of the program.
 entrypoint!(process_instruction);
@@ -20,7 +38,8 @@ pub fn process_instruction(
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
-    let mut batch = Batch::default();
+    let mut batch_state = BatchState::new(MAX_ACCOUNTS_LEN, MAX_DATA_LEN);
+    let mut batch = batch_state.as_batch()?;
 
     InitializeMint2::new(
         mint1,

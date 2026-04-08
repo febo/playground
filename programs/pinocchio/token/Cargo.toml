@@ -14,4 +14,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 pinocchio = { workspace = true }
-pinocchio-token = { workspace = true, features = ["batch"] }
+pinocchio-token = { workspace = true, features = ["alloc"] }

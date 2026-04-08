@@ -1585,8 +1585,9 @@ dependencies = [
 
 [[package]]
 name = "pinocchio"
-version = "0.10.2"
-source = "git+https://github.com/anza-xyz/pinocchio.git?branch=febo%2Fbatch-instruction#3178891cc3e0286844eaeacdd3919d74933d2937"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "929a06c3417427ae957330805916db548a027ab2afda4226b20ba671a4d317fd"
 dependencies = [
  "solana-account-view",
  "solana-address 2.4.0",
@@ -1627,8 +1628,9 @@ dependencies = [
 
 [[package]]
 name = "pinocchio-system"
-version = "0.5.0"
-source = "git+https://github.com/anza-xyz/pinocchio.git?branch=febo%2Fbatch-instruction#3178891cc3e0286844eaeacdd3919d74933d2937"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b47216785b5877051afa074920e88b5990c4ce74f0da94c7cb5a139684c48ffe"
 dependencies = [
  "pinocchio",
  "solana-address 2.4.0",
@@ -1639,13 +1641,14 @@ name = "pinocchio-token"
 version = "0.1.0"
 dependencies = [
  "pinocchio",
- "pinocchio-token 0.5.0",
+ "pinocchio-token 0.6.0",
 ]
 
 [[package]]
 name = "pinocchio-token"
-version = "0.5.0"
-source = "git+https://github.com/anza-xyz/pinocchio.git?branch=febo%2Fbatch-instruction#3178891cc3e0286844eaeacdd3919d74933d2937"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "825f59c8348e5c2d3fd56432ef927f5819542b3b05fae4f5b6869801113e775e"
 dependencies = [
  "solana-account-view",
  "solana-address 2.4.0",
@@ -2417,9 +2420,9 @@ dependencies = [
 
 [[package]]
 name = "solana-instruction-view"
-version = "2.0.0"
+version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7c35d02cd27575b1fd05938d3624e476b0173208139053b51aa48dd9bec149f1"
+checksum = "6ab7a27d0c4214b9f7389c3dd00b68c93093a67f1dcc5b7893aebe299bbcbb47"
 dependencies = [
  "solana-account-view",
  "solana-address 2.4.0",
