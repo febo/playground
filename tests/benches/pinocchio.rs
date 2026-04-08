@@ -39,7 +39,7 @@ mod pinocchio {
     }
 
     #[bench]
-    fn token(_bencher: &mut Bencher) {
-        setup::run_token(&PROGRAM_ID, "pinocchio_token");
+    fn batch(_bencher: &mut Bencher) {
+        setup::run_batch(&PROGRAM_ID, "pinocchio_token");
     }
 }

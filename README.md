@@ -24,6 +24,7 @@ pub fn process_instruction(
 ```
 
 The workspace uses [mollusk](https://github.com/anza-xyz/mollusk) to run tests and measure compute units. There are 3 benches setup:
+* `batch`: executes a Token batch instruction.
 * `cpi`: executes the program assuming that it will CPI into the syste, program to create an account.
 * `entrypoint`: executes the program with a variable number of accounts.
 * `log`: executes the program assuming it will log the lamports of an account.
@@ -68,21 +69,28 @@ For `cpi`:
 ```
 | Name                   | CUs  | Delta   |
 |------------------------|------|---------|
-| system_program::create | 1281 | - new - |
+| system_program::create | 1207 | - new - |
 ```
 
 For `log`:
 ```
 | Name | CUs  | Delta   |
 |------|------|---------|
-| log  | 447  | - new - |
+| log  | 466  | - new - |
 ```
 
 For `rent`:
 ```
 | Name | CUs  | Delta   |
 |------|------|---------|
-| rent  | 147  | - new - |
+| rent | 139  | - new - |
+```
+
+For `batch`:
+```
+| Name         | CUs  | Delta   |
+|--------------|------|---------|
+| token::batch | 2695 | - new - |
 ```
 
 When you make a modification or run a different type of program ("pinocchio" or "sdk") but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.

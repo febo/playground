@@ -112,11 +112,8 @@ pub fn log_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account
 }
 
 /// Generates the instruction data and accounts to execute a program that
-/// performs a cross-program invocation (CPI).
-pub fn token_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
-    // keys[0] = mint
-    // keys[1] = account
-    // keys[2] = authority
+/// performs a token batch instruction.
+pub fn batch_instruction(program_id: Pubkey) -> (Instruction, Vec<(Pubkey, Account)>) {
     let keys = generate_pubkeys(7);
     let (token_program_id, token_program_account) = (
         TOKEN_PROGRAM,
@@ -258,7 +255,7 @@ pub fn run_rent(program_id: &Pubkey, name: &'static str) {
     bencher.execute();
 }
 
-pub fn run_token(program_id: &Pubkey, name: &'static str) {
+pub fn run_batch(program_id: &Pubkey, name: &'static str) {
     let mut mollusk = setup(program_id, name);
     mollusk.add_program(&TOKEN_PROGRAM, "pinocchio_token_program");
 
@@ -266,8 +263,8 @@ pub fn run_token(program_id: &Pubkey, name: &'static str) {
         .must_pass(true)
         .out_dir("../target/benches");
 
-    let (instruction, accounts) = token_instruction(*program_id);
-    bencher = bencher.bench(("token", &instruction, &accounts));
+    let (instruction, accounts) = batch_instruction(*program_id);
+    bencher = bencher.bench(("token::batch", &instruction, &accounts));
 
     bencher.execute();
 }
