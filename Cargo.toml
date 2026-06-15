@@ -13,14 +13,14 @@ members = [
 ]
 
 [workspace.dependencies]
-pinocchio = { version = "0.10.0", git = "https://github.com/anza-xyz/pinocchio.git" }
-pinocchio-system = { version = "0.5", git = "https://github.com/anza-xyz/pinocchio.git" }
+pinocchio = "0.11"
+pinocchio-system = "0.6"
 solana-account-info = "3.0"
 solana-cpi = "3.0"
 solana-msg = "3.0"
 solana-program-entrypoint = "3.0"
 solana-program-error = "3.0"
-solana-program-log = "1.0"
+solana-program-log = "1.2"
 solana-pubkey = "3.0"
 solana-rent = "4.1.0"
 solana-system-interface = "2.0"
