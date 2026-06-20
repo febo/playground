@@ -82,7 +82,7 @@ For `rent`:
 ```
 | Name | CUs  | Delta   |
 |------|------|---------|
-| rent | 138 | - new - |
+| rent | 138  | - new - |
 ```
 
 When you make a modification or run a different type of program ("pinocchio" or "sdk") but execute the same bench test, the "Delta" column will show the difference in CUs compared to the previous run.
